@@ -2,18 +2,20 @@
    import NumberSelector from "./NumberSelector";
    import RoleDice from "./RoleDice";
    import TotalScore from "./TotalScore";
+import ShowRule from "./ShowRule";
    
    const Gameplay = () => {
      const [selectedNumber, setSelectedNumber] = useState(0);
      const [currentDice, setCurrentDice] = useState(1);
      const [score, setScore] = useState(0);
      const [error, setError] = useState("");
+     const [isRuleShown, setIsRuleShown] = useState(false);
      
      
    
-     const generateRandomNumber = (min, max) => {
-       return Math.floor(Math.random() * (max - min + 1)) + min;
-     };
+     const generateRandomNumber = () => {
+      return Math.floor(Math.random() * 6) + 1; 
+    };
    
      const handleDiceRoll = () => {
        if (!selectedNumber) {
@@ -23,7 +25,7 @@
        
        setError("");
    
-       const randomNumber = generateRandomNumber(1, 6);
+       const randomNumber = generateRandomNumber();
        setCurrentDice(randomNumber);
    
        if (selectedNumber === randomNumber) {
@@ -47,8 +49,13 @@
          </div>
          <RoleDice
            currentDice={currentDice}
-           handleDiceRoll={handleDiceRoll}
+           handleDiceRoll={handleDiceRoll} 
+           setCurrentDice={setCurrentDice}
+           setScore={setScore}
+           setIsRuleShown={setIsRuleShown}
+           score={score}
          />
+         <ShowRule isRuleShown={isRuleShown} setIsRuleShown={setIsRuleShown}/>
        </main>
      );
    };
